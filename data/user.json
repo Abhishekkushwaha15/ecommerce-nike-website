@@ -1,0 +1,7 @@
+{
+  "id": "demo-user",
+  "firstName": "Demo",
+  "lastName": "Customer",
+  "email": "demo@example.com",
+  "addresses": []
+}

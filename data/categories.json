@@ -1,0 +1,5 @@
+[
+  { "id": "running", "name": "Running", "slug": "running" },
+  { "id": "lifestyle", "name": "Lifestyle", "slug": "lifestyle" },
+  { "id": "training", "name": "Training", "slug": "training" }
+]
