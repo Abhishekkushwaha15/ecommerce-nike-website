@@ -18,7 +18,7 @@ export async function renderRoute() {
   const { path, query } = getRoute();
   const route = matchRoute(path);
   const page = await route.load();
-  document.title = `${route.title} | Swoosh Store`;
+  document.title = `${route.title} | Nike`;
   app.dataset.route = route.path;
   app.innerHTML = page.render({ query });
   page.init?.({ query });
