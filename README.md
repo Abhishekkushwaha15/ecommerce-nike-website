@@ -1,6 +1,6 @@
 # Swoosh Store
 
-A vanilla HTML, CSS, and JavaScript ecommerce foundation. It intentionally contains no UI yet; this repository only establishes the application architecture.
+A vanilla HTML, CSS, and JavaScript Nike-inspired ecommerce experience with hash-based routing and a responsive product catalog.
 
 ## Start
 
@@ -11,7 +11,7 @@ Serve the repository root with any static development server, then open `HTML/in
 | Route | Purpose |
 | --- | --- |
 | `#/` | Home |
-| `#/shop` | Product catalog |
+| `#/shop` | Product catalog with search, filters, sorting, wishlist, bag actions, and load-more pagination |
 | `#/product?slug=air-max-alpha` | Product detail |
 | `#/search` | Search results |
 | `#/wishlist` | Saved products |
@@ -38,6 +38,6 @@ assets/            images and icons
 - Keep page rendering and page-specific behaviour in `pages/`.
 - Place API, storage, and domain operations in `JS/services/`.
 - Import CSS only through `CSS/style.css`; scope rules by responsibility.
-- Placeholder products live in `JS/data/products.js`; replace with an API or a data source later.
+- The local catalog lives in `JS/data/products.js`; filters and sorting are handled client-side in `JS/services/catalog-service.js`.
 
 This project is for learning and demonstration purposes only and is not affiliated with Nike.
