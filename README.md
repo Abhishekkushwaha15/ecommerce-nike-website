@@ -12,7 +12,7 @@ Serve the repository root with any static development server, then open `HTML/in
 | --- | --- |
 | `#/` | Home |
 | `#/shop` | Product catalog with search, filters, sorting, wishlist, bag actions, and load-more pagination |
-| `#/product?slug=air-max-alpha` | Product detail |
+| `#/product?slug=air-zoom-pegasus-41` | Product detail with gallery, size/colour options, bag, wishlist, and reviews |
 | `#/search` | Search results |
 | `#/wishlist` | Saved products |
 | `#/cart` | Shopping cart |
@@ -38,6 +38,7 @@ assets/            images and icons
 - Keep page rendering and page-specific behaviour in `pages/`.
 - Place API, storage, and domain operations in `JS/services/`.
 - Import CSS only through `CSS/style.css`; scope rules by responsibility.
-- The local catalog lives in `JS/data/products.js`; filters and sorting are handled client-side in `JS/services/catalog-service.js`.
+- The local catalog lives in `JS/data/products.js`; filters, sorting, and product lookup are handled client-side in `JS/services/catalog-service.js`.
+- Cart and wishlist choices are stored locally in the browser, including product size and colour variants.
 
 This project is for learning and demonstration purposes only and is not affiliated with Nike.

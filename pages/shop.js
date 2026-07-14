@@ -1,6 +1,6 @@
 import { getProducts } from '../JS/services/catalog-service.js';
-import { getCart, saveCart } from '../JS/services/cart-service.js';
-import { STORAGE_KEYS } from '../JS/config/constants.js';
+import { addToCart } from '../JS/services/cart-service.js';
+import { getWishlist, toggleWishlist } from '../JS/services/wishlist-service.js';
 import { filterPanel } from '../JS/components/filter-panel.js';
 import { productGrid } from '../JS/components/product-grid.js';
 import { emptyState } from '../JS/components/empty-state.js';
@@ -10,8 +10,6 @@ const defaultFilters = { query: '', category: '', brand: '', minPrice: '', maxPr
 let state = { ...defaultFilters, visibleCount: PAGE_SIZE };
 let scheduledRender;
 
-function getWishlist() { return JSON.parse(localStorage.getItem(STORAGE_KEYS.wishlist) || '[]'); }
-function saveWishlist(items) { localStorage.setItem(STORAGE_KEYS.wishlist, JSON.stringify(items)); }
 function activeProducts() { return getProducts({ ...state, minPrice: state.minPrice === '' ? 0 : Number(state.minPrice), maxPrice: state.maxPrice === '' ? Infinity : Number(state.maxPrice) }); }
 
 function skeletons() { return Array.from({ length: 3 }, () => '<article class="catalog-skeleton" aria-hidden="true"><div></div><i></i><i></i></article>').join(''); }
@@ -79,14 +77,11 @@ function handleAction(event) {
   if (action === 'toggle-filters') { const sidebar = document.querySelector('.shop-filters'); const button = event.target.closest('button'); sidebar.classList.toggle('is-open'); button.setAttribute('aria-expanded', sidebar.classList.contains('is-open')); return; }
   if (action === 'cart') {
     const id = event.target.closest('[data-product-id]').dataset.productId;
-    const cart = getCart(); const item = cart.find((entry) => entry.id === id);
-    if (item) item.quantity = (item.quantity || 1) + 1; else cart.push({ id, quantity: 1 });
-    saveCart(cart); event.target.textContent = 'Added'; window.setTimeout(() => { event.target.textContent = 'Add to bag'; }, 1100); return;
+    addToCart({ id }); event.target.textContent = 'Added'; window.setTimeout(() => { event.target.textContent = 'Add to bag'; }, 1100); return;
   }
   if (action === 'wishlist') {
     const id = event.target.closest('[data-product-id]').dataset.productId;
-    const next = getWishlist(); const index = next.indexOf(id);
-    index >= 0 ? next.splice(index, 1) : next.push(id); saveWishlist(next); renderProducts();
+    toggleWishlist(id); renderProducts();
   }
   if (action === 'load-more') { state.visibleCount += PAGE_SIZE; renderProducts(); }
 }
