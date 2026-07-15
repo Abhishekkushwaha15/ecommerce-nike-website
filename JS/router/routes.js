@@ -7,5 +7,7 @@ export const routes = [
   { path: '/cart', title: 'Cart', load: () => import('../../pages/cart.js') },
   { path: '/checkout', title: 'Checkout', load: () => import('../../pages/checkout.js') },
   { path: '/account', title: 'Account', load: () => import('../../pages/account.js') },
+  { path: '/about', title: 'About', load: () => import('../../pages/about.js') },
+  { path: '/contact', title: 'Contact', load: () => import('../../pages/contact.js') },
   { path: '*', title: 'Page not found', load: () => import('../../pages/not-found.js') },
 ];

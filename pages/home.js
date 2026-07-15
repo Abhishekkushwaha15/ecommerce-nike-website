@@ -1,4 +1,5 @@
 const arrow = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>';
+import { newsletter } from '../JS/components/newsletter.js';
 
 export function render() {
   return `
@@ -48,7 +49,7 @@ export function render() {
         </div>
       </section>
 
-      <section class="newsletter"><div class="newsletter__orb"></div><div class="section-shell newsletter__inner reveal"><p class="eyebrow">Nike members get more</p><h2>Stay one step<br>ahead.</h2><p>Join us for first access to new releases, member-only drops, and stories made to move you.</p><form class="newsletter__form"><label class="sr-only" for="email">Email address</label><input id="email" type="email" placeholder="Your email address" required><button type="submit" aria-label="Subscribe">${arrow}</button></form><small>By signing up, you agree to receive Nike news and offers.</small></div></section>
+      ${newsletter()}
     </section>`;
 }
 

@@ -18,6 +18,8 @@ Serve the repository root with any static development server, then open `HTML/in
 | `#/cart` | Shopping cart |
 | `#/checkout` | Checkout flow |
 | `#/account` | Customer account |
+| `#/about` | Brand story, values, team, and service commitments |
+| `#/contact` | Contact details, validated message form, FAQ, and map placeholder |
 
 ## Structure
 
