@@ -30,3 +30,4 @@ export function sortProducts(productsToSort, sort = 'featured') {
 }
 
 export function getProductBySlug(slug) { return products.find((product) => product.slug === slug); }
+export function getProductById(id) { return products.find((product) => product.id === id); }

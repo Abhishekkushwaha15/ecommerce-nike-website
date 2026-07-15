@@ -94,7 +94,8 @@ export function init() {
       else { button.textContent = saved ? '♥ Saved to wishlist' : '♡ Add to wishlist'; button.setAttribute('aria-pressed', saved); }
     }
     if (action === 'cart') {
-      addToCart({ id: button.closest('[data-product-id]').dataset.productId });
+      const product = getProducts().find((item) => item.id === button.closest('[data-product-id]').dataset.productId);
+      addToCart({ id: product.id, size: product.sizes[0], color: product.colors[0] });
       button.textContent = 'Added'; window.setTimeout(() => { button.textContent = 'Add to bag'; }, 1200);
     }
     if (action === 'add-cart' || action === 'buy-now') {

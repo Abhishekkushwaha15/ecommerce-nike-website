@@ -1,4 +1,4 @@
-import { getProducts } from '../JS/services/catalog-service.js';
+import { getProducts, getProductById } from '../JS/services/catalog-service.js';
 import { addToCart } from '../JS/services/cart-service.js';
 import { getWishlist, toggleWishlist } from '../JS/services/wishlist-service.js';
 import { filterPanel } from '../JS/components/filter-panel.js';
@@ -77,7 +77,8 @@ function handleAction(event) {
   if (action === 'toggle-filters') { const sidebar = document.querySelector('.shop-filters'); const button = event.target.closest('button'); sidebar.classList.toggle('is-open'); button.setAttribute('aria-expanded', sidebar.classList.contains('is-open')); return; }
   if (action === 'cart') {
     const id = event.target.closest('[data-product-id]').dataset.productId;
-    addToCart({ id }); event.target.textContent = 'Added'; window.setTimeout(() => { event.target.textContent = 'Add to bag'; }, 1100); return;
+    const product = getProductById(id);
+    addToCart({ id, size: product.sizes[0], color: product.colors[0] }); event.target.textContent = 'Added'; window.setTimeout(() => { event.target.textContent = 'Add to bag'; }, 1100); return;
   }
   if (action === 'wishlist') {
     const id = event.target.closest('[data-product-id]').dataset.productId;
