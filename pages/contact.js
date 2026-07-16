@@ -1,4 +1,5 @@
 import { newsletter, initNewsletter } from '../JS/components/newsletter.js';
+import { showToast } from '../JS/components/toast.js';
 
 const contactDetails = [
   ['Visit us', '18, Park Street\nBengaluru, KA 560001'],
@@ -54,5 +55,6 @@ export function init() {
     fields.forEach((field) => field.removeAttribute('aria-invalid'));
     form.querySelectorAll('[data-error-for]').forEach((error) => { error.textContent = ''; });
     status.textContent = "Thanks - your message has been sent. We'll be in touch soon.";
+    showToast('Thanks - your message has been sent.');
   });
 }

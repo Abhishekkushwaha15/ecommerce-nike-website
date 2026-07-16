@@ -3,6 +3,7 @@ import { renderHeader } from './components/header.js';
 import { renderFooter } from './components/footer.js';
 import { initExperience, syncExperience } from './components/experience.js';
 import { initToasts } from './components/toast.js';
+import { loader } from './components/loader.js';
 
 const app = document.querySelector('#app');
 
@@ -19,6 +20,7 @@ function matchRoute(path) {
 export async function renderRoute() {
   const { path, query } = getRoute();
   const route = matchRoute(path);
+  app.innerHTML = loader();
   const page = await route.load();
   document.title = `${route.title} | Nike`;
   app.dataset.route = route.path;

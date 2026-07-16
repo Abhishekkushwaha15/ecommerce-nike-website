@@ -21,6 +21,12 @@ Serve the repository root with any static development server, then open `HTML/in
 | `#/about` | Brand story, values, team, and service commitments |
 | `#/contact` | Contact details, validated message form, FAQ, and map placeholder |
 
+## Experience features
+
+- Wishlist and bag choices persist in local storage, with live navigation counters and toast feedback.
+- Search supports instant results, suggestions, result highlighting, and recent searches stored locally.
+- Shared scroll progress, back-to-top control, route loading indicator, responsive empty states, and a custom 404 page provide consistent feedback throughout the storefront.
+
 ## Structure
 
 ```text

@@ -1,3 +1,5 @@
+import { showToast } from './toast.js';
+
 const arrow = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>';
 
 export function newsletter() {
@@ -11,6 +13,9 @@ export function initNewsletter(scope = document) {
     const input = form.querySelector('input');
     const status = form.closest('[data-component="newsletter"]').querySelector('[data-newsletter-status]');
     if (!input.checkValidity()) { input.focus(); status.textContent = 'Enter a valid email address to subscribe.'; return; }
-    form.classList.add('is-submitted'); input.value = ''; status.textContent = 'You’re on the list. Watch your inbox for the next drop.';
+    form.classList.add('is-submitted');
+    input.value = '';
+    status.textContent = "You're on the list. Watch your inbox for the next drop.";
+    showToast('You are on the Nike member list.');
   });
 }

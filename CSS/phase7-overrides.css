@@ -1,0 +1,11 @@
+#site-header { position:fixed; top:0; left:0; }
+[data-component="loader"] { min-height:55vh; display:grid; place-items:center; }
+[data-component="loader"]:before { content:''; width:42px; height:42px; border:3px solid #dedbd5; border-top-color:var(--orange); border-radius:50%; animation:phase7-spin .8s linear infinite; }
+.catalog-card__wish { transition:transform .22s,background .22s,color .22s; }
+.catalog-card__wish:hover,.catalog-card__wish.is-saved { transform:scale(1.12); }
+.catalog-card__wish.is-saved { animation:phase7-heart .36s ease both; }
+.catalog-card,.contact-details article,.about-team__grid article { transition:transform .25s,box-shadow .25s; }
+.catalog-card:hover { transform:translateY(-3px); }
+@keyframes phase7-spin { to { transform:rotate(360deg); } }
+@keyframes phase7-heart { 50% { transform:scale(1.35); } }
+@media (prefers-reduced-motion:reduce) { [data-component="loader"]:before { animation:none; } }

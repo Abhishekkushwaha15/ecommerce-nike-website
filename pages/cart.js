@@ -4,6 +4,7 @@ import { formatCurrency } from '../JS/utils/currency.js';
 import { cartItem } from '../JS/components/cart-item.js';
 import { productGrid } from '../JS/components/product-grid.js';
 import { getWishlist, toggleWishlist } from '../JS/services/wishlist-service.js';
+import { showToast } from '../JS/components/toast.js';
 
 const PROMOS = Object.freeze({ NIKE10: 0.10, WELCOME15: 0.15 });
 let state = { promo: '', message: '', messageType: '' };
@@ -70,8 +71,8 @@ export function init() {
     if (!event.target.matches('[data-promo-form]')) return;
     event.preventDefault();
     const code = new FormData(event.target).get('promo').trim().toUpperCase();
-    if (PROMOS[code]) { state = { promo: code, message: `${code} applied to your order.`, messageType: 'is-success' }; }
-    else { state = { promo: '', message: code ? 'That code is not available. Try NIKE10 or WELCOME15.' : 'Enter a promo code to apply it.', messageType: 'is-error' }; }
+    if (PROMOS[code]) { state = { promo: code, message: `${code} applied to your order.`, messageType: 'is-success' }; showToast(`${code} applied to your order.`); }
+    else { state = { promo: '', message: code ? 'That code is not available. Try NIKE10 or WELCOME15.' : 'Enter a promo code to apply it.', messageType: 'is-error' }; showToast(state.message, 'error'); }
     renderContent();
   });
   page.addEventListener('click', (event) => {
