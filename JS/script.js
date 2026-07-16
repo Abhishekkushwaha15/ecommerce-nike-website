@@ -1,6 +1,8 @@
 import { routes } from './router/routes.js';
 import { renderHeader } from './components/header.js';
 import { renderFooter } from './components/footer.js';
+import { initExperience, syncExperience } from './components/experience.js';
+import { initToasts } from './components/toast.js';
 
 const app = document.querySelector('#app');
 
@@ -22,11 +24,15 @@ export async function renderRoute() {
   app.dataset.route = route.path;
   app.innerHTML = page.render({ query });
   page.init?.({ query });
+  syncExperience(route.path);
+  app.focus({ preventScroll: true });
 }
 
 function bootstrap() {
   renderHeader(document.querySelector('#site-header'));
   renderFooter(document.querySelector('#site-footer'));
+  initExperience();
+  initToasts();
   window.addEventListener('hashchange', renderRoute);
   renderRoute();
 }

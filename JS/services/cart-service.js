@@ -1,4 +1,5 @@
 import { STORAGE_KEYS } from '../config/constants.js';
+import { emitStoreChange } from './store-events.js';
 
 export function getCart() {
   try {
@@ -19,6 +20,7 @@ export function addToCart({ id, quantity = 1, size, color }) {
   if (item) item.quantity = (item.quantity || 1) + quantity;
   else cart.push({ id, quantity, size, color });
   saveCart(cart);
+  emitStoreChange('cart', 'add', id);
   return cart;
 }
 
@@ -28,6 +30,7 @@ export function updateCartQuantity({ id, size, color, quantity }) {
   if (!item) return cart;
   item.quantity = Math.max(1, Number(quantity) || 1);
   saveCart(cart);
+  emitStoreChange('cart', 'remove', id);
   return cart;
 }
 
