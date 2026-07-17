@@ -12,7 +12,7 @@ export function render() {
           <p class="hero__description">The future of air is here. Engineered for all-day movement, designed to turn every step into a statement.</p>
           <div class="hero__actions">
             <a class="button button--light" href="#/shop">Shop the collection ${arrow}</a>
-            <a class="text-link" href="#featured">Discover the story <span>↓</span></a>
+            <a class="text-link" href="#/?anchor=featured">Discover the story <span>↓</span></a>
           </div>
         </div>
         <div class="hero__meta"><span>01</span><i></i><span>04</span></div>

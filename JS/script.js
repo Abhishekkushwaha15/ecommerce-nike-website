@@ -1,7 +1,7 @@
 import { routes } from './router/routes.js';
 import { renderHeader } from './components/header.js';
 import { renderFooter } from './components/footer.js';
-import { initExperience, syncExperience } from './components/experience.js';
+import { initExperience, syncExperience, observeReveals } from './components/experience.js';
 import { initToasts } from './components/toast.js';
 import { loader } from './components/loader.js';
 
@@ -20,6 +20,8 @@ function matchRoute(path) {
 export async function renderRoute() {
   const { path, query } = getRoute();
   const route = matchRoute(path);
+  document.querySelector('#site-header').classList.remove('is-menu-open');
+  document.body.classList.remove('nav-open');
   app.innerHTML = loader();
   const page = await route.load();
   document.title = `${route.title} | Nike`;
@@ -27,6 +29,10 @@ export async function renderRoute() {
   app.innerHTML = page.render({ query });
   page.init?.({ query });
   syncExperience(route.path);
+  observeReveals();
+  const anchor = query.get('anchor');
+  if (anchor) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  else window.scrollTo({ top: 0, behavior: 'auto' });
   app.focus({ preventScroll: true });
 }
 
