@@ -30,12 +30,13 @@ export function updateCartQuantity({ id, size, color, quantity }) {
   if (!item) return cart;
   item.quantity = Math.max(1, Number(quantity) || 1);
   saveCart(cart);
-  emitStoreChange('cart', 'remove', id);
+  emitStoreChange('cart', 'update', id);
   return cart;
 }
 
 export function removeFromCart({ id, size, color }) {
   const cart = getCart().filter((entry) => !(entry.id === id && entry.size === size && entry.color === color));
   saveCart(cart);
+  emitStoreChange('cart', 'remove', id);
   return cart;
 }

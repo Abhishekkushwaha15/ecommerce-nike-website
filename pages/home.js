@@ -1,5 +1,5 @@
 const arrow = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>';
-import { newsletter } from '../JS/components/newsletter.js';
+import { initNewsletter, newsletter } from '../JS/components/newsletter.js';
 
 export function render() {
   return `
@@ -53,10 +53,4 @@ export function render() {
     </section>`;
 }
 
-export function init() {
-  document.querySelector('.newsletter__form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    event.currentTarget.classList.add('is-submitted');
-    event.currentTarget.querySelector('input').value = 'You’re on the list.';
-  });
-}
+export function init() { initNewsletter(); }

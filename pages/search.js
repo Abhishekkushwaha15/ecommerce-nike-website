@@ -2,11 +2,19 @@ import { getProducts } from '../JS/services/catalog-service.js';
 import { getWishlist, toggleWishlist } from '../JS/services/wishlist-service.js';
 import { addToCart } from '../JS/services/cart-service.js';
 import { productGrid } from '../JS/components/product-grid.js';
+import { escapeHTML } from '../JS/utils/html.js';
 
 const HISTORY_KEY = 'swoosh-recent-searches';
 let query = '';
 
-function recentSearches() { try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]').slice(0, 5); } catch { return []; } }
+function recentSearches() {
+  try {
+    const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+    return Array.isArray(history) ? history.filter((item) => typeof item === 'string').slice(0, 5) : [];
+  } catch {
+    return [];
+  }
+}
 function saveSearch(value) { if (!value) return; localStorage.setItem(HISTORY_KEY, JSON.stringify([value, ...recentSearches().filter((item) => item.toLowerCase() !== value.toLowerCase())].slice(0, 5))); }
 function clearHistory() { localStorage.removeItem(HISTORY_KEY); }
 function results() { return getProducts({ query }).slice(0, 12); }
@@ -15,7 +23,8 @@ function searchBody() {
   const products = results();
   const suggestions = query ? products.slice(0, 5) : [];
   const history = recentSearches();
-  return `<div class="search-panel"><label class="search-input"><span class="sr-only">Search the catalog</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="5.8"/><path d="m16 16 4 4"/></svg><input data-search-input type="search" value="${query}" autocomplete="off" placeholder="Search shoes, sport, or style"><button data-action="clear-search" type="button" aria-label="Clear search" ${query ? '' : 'hidden'}>×</button></label><div class="search-suggestions" data-search-suggestions>${suggestions.length ? suggestions.map((product) => `<a href="#/product?slug=${product.slug}"><span>${product.name}</span><small>${product.category}</small></a>`).join('') : !query && history.length ? `<div class="search-history"><div><b>Recent searches</b><button type="button" data-action="clear-history">Clear</button></div>${history.map((item) => `<button type="button" data-search-term="${item}">${item}</button>`).join('')}</div>` : ''}</div></div><div class="search-results" data-search-results>${query ? products.length ? `<p class="search-results__count">${products.length} result${products.length === 1 ? '' : 's'} for <b>"${query}"</b></p><div class="catalog-grid">${productGrid(products, getWishlist())}</div>` : `<section class="experience-empty"><div class="experience-empty__art" aria-hidden="true">⌕</div><h2>No matches found.</h2><p>Try a different style, sport, or product name.</p><a class="experience-button" href="#/shop">Browse all shoes</a></section>` : `<section class="search-intro"><p>Start typing to explore performance footwear, new releases, and classics.</p></section>`}</div>`;
+  const safeQuery = escapeHTML(query);
+  return `<div class="search-panel"><label class="search-input"><span class="sr-only">Search the catalog</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="5.8"/><path d="m16 16 4 4"/></svg><input data-search-input type="search" value="${safeQuery}" autocomplete="off" placeholder="Search shoes, sport, or style"><button data-action="clear-search" type="button" aria-label="Clear search" ${query ? '' : 'hidden'}>×</button></label><div class="search-suggestions" data-search-suggestions>${suggestions.length ? suggestions.map((product) => `<a href="#/product?slug=${product.slug}"><span>${product.name}</span><small>${product.category}</small></a>`).join('') : !query && history.length ? `<div class="search-history"><div><b>Recent searches</b><button type="button" data-action="clear-history">Clear</button></div>${history.map((item) => `<button type="button" data-search-term="${escapeHTML(item)}">${escapeHTML(item)}</button>`).join('')}</div>` : ''}</div></div><div class="search-results" data-search-results>${query ? products.length ? `<p class="search-results__count">${products.length} result${products.length === 1 ? '' : 's'} for <b>"${safeQuery}"</b></p><div class="catalog-grid">${productGrid(products, getWishlist())}</div>` : `<section class="experience-empty"><div class="experience-empty__art" aria-hidden="true">⌕</div><h2>No matches found.</h2><p>Try a different style, sport, or product name.</p><a class="experience-button" href="#/shop">Browse all shoes</a></section>` : `<section class="search-intro"><p>Start typing to explore performance footwear, new releases, and classics.</p></section>`}</div>`;
 }
 
 function highlight(scope) {

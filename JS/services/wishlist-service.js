@@ -1,7 +1,14 @@
 import { STORAGE_KEYS } from '../config/constants.js';
 import { emitStoreChange } from './store-events.js';
 
-export function getWishlist() { return JSON.parse(localStorage.getItem(STORAGE_KEYS.wishlist) || '[]'); }
+export function getWishlist() {
+  try {
+    const wishlist = JSON.parse(localStorage.getItem(STORAGE_KEYS.wishlist) || '[]');
+    return Array.isArray(wishlist) ? wishlist : [];
+  } catch {
+    return [];
+  }
+}
 
 export function toggleWishlist(productId) {
   const items = getWishlist();

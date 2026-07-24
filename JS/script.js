@@ -6,6 +6,23 @@ import { initToasts } from './components/toast.js';
 import { loader } from './components/loader.js';
 
 const app = document.querySelector('#app');
+const siteUrl = window.location.href.split('#')[0];
+const socialImageUrl = new URL('../assets/images/hero-performance-shoe.png', import.meta.url).href;
+
+function setMetadata(route) {
+  const title = `${route.title} | Nike`;
+  const description = route.description;
+  document.title = title;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', description);
+  document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
+  document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
+  document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', title);
+  document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description);
+  document.querySelector('link[rel="canonical"]')?.setAttribute('href', siteUrl);
+  document.querySelector('meta[property="og:url"]')?.setAttribute('content', siteUrl);
+  document.querySelector('meta[property="og:image"]')?.setAttribute('content', socialImageUrl);
+  document.querySelector('meta[name="twitter:image"]')?.setAttribute('content', socialImageUrl);
+}
 
 function getRoute() {
   const [path, query = ''] = window.location.hash.slice(1).split('?');
@@ -22,11 +39,13 @@ export async function renderRoute() {
   const route = matchRoute(path);
   document.querySelector('#site-header').classList.remove('is-menu-open');
   document.body.classList.remove('nav-open');
+  app.setAttribute('aria-busy', 'true');
   app.innerHTML = loader();
   const page = await route.load();
-  document.title = `${route.title} | Nike`;
+  setMetadata(route);
   app.dataset.route = route.path;
   app.innerHTML = page.render({ query });
+  app.setAttribute('aria-busy', 'false');
   page.init?.({ query });
   syncExperience(route.path);
   observeReveals();
@@ -46,21 +65,3 @@ function bootstrap() {
 }
 
 bootstrap();
-
-
-import { formatCurrency } from '../utils/currency.js';
-import { quantitySelector } from './quantity-selector.js';
-
-export function cartItem({ product, quantity, size, color }) {
-  const sizeLabel = size || 'Standard';
-  const colorLabel = color || product.colors[0];
-  return `<article class="cart-item" data-cart-item data-product-id="${product.id}" data-size="${size || ''}" data-color="${color || ''}">
-    <a class="cart-item__art product-art product-art--${product.art} product-art--color-${colorLabel}" href="#/product?slug=${product.slug}" aria-label="View ${product.name}"><span class="product-art__shoe" aria-hidden="true"></span></a>
-    <div class="cart-item__details">
-      <div class="cart-item__heading"><div><p>${product.category} · ${product.brand}</p><h2><a href="#/product?slug=${product.slug}">${product.name}</a></h2></div><strong>${formatCurrency(product.price * quantity)}</strong></div>
-      <p class="cart-item__options">Size <b>${sizeLabel}</b><span></span>Colour <b>${colorLabel}</b></p>
-      <div class="cart-item__footer">${quantitySelector({ value: quantity, max: 8 })}<span class="cart-item__unit-price">${formatCurrency(product.price)} each</span><div class="cart-item__actions"><button type="button" data-action="save-for-later">Save for later</button><button type="button" data-action="remove-cart-item" aria-label="Remove ${product.name} from bag">Remove</button></div></div>
-    </div>
-  </article>`;
-}
-

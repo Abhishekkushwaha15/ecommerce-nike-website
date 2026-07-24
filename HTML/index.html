@@ -4,14 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Nike — move at the speed of now." />
-    <title>Nike</title>
+    <meta name="theme-color" content="#101010" />
+    <link rel="canonical" href="/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Nike" />
+    <meta property="og:title" content="Nike | Move at the speed of now" />
+    <meta property="og:description" content="Discover Nike footwear built for every pace, practice, and possibility." />
+    <meta property="og:url" content="/" />
+    <meta property="og:image" content="../assets/images/hero-performance-shoe.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nike | Move at the speed of now" />
+    <meta name="twitter:description" content="Discover Nike footwear built for every pace, practice, and possibility." />
+    <meta name="twitter:image" content="../assets/images/hero-performance-shoe.png" />
+    <link rel="preload" as="image" href="../assets/images/hero-performance-shoe.png" fetchpriority="high" />
+    <title>Nike | Move at the speed of now</title>
     <link rel="stylesheet" href="../CSS/style.css" />
   </head>
   <body>
+    <a class="skip-link" href="#app">Skip to main content</a>
     <!-- Layout regions are mounted by reusable JavaScript components. -->
     <header id="site-header"></header>
     <main id="app" tabindex="-1" aria-live="polite"></main>
     <footer id="site-footer"></footer>
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"WebSite","name":"Nike","description":"Nike footwear built for every pace, practice, and possibility."}
+    </script>
     <script type="module" src="../JS/script.js"></script>
   </body>
 </html>

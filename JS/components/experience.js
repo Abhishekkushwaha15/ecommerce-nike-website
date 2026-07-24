@@ -2,6 +2,7 @@ import { getCart } from '../services/cart-service.js';
 import { getWishlist } from '../services/wishlist-service.js';
 
 let revealObserver;
+let scrollFrame;
 
 function updateCounters() {
   const wishlistCount = getWishlist().length;
@@ -12,14 +13,33 @@ function updateCounters() {
 
 function updateScrollUI() {
   const max = document.documentElement.scrollHeight - window.innerHeight;
-  document.querySelector('[data-scroll-progress]').style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
-  document.querySelector('[data-back-to-top]').classList.toggle('is-visible', window.scrollY > 500);
-  document.querySelector('#site-header').classList.toggle('is-scrolled', window.scrollY > 18);
+  document.querySelector('[data-scroll-progress]')?.style.setProperty('transform', `scaleX(${max > 0 ? window.scrollY / max : 0})`);
+  document.querySelector('[data-back-to-top]')?.classList.toggle('is-visible', window.scrollY > 500);
+  document.querySelector('#site-header')?.classList.toggle('is-scrolled', window.scrollY > 18);
+}
+
+function scheduleScrollUI() {
+  if (scrollFrame) return;
+  scrollFrame = requestAnimationFrame(() => { scrollFrame = undefined; updateScrollUI(); });
+}
+
+function setMenuOpen(open) {
+  const header = document.querySelector('#site-header');
+  const toggle = header?.querySelector('.nav__toggle');
+  if (!header || !toggle) return;
+  header.classList.toggle('is-menu-open', open);
+  document.body.classList.toggle('nav-open', open);
+  toggle.setAttribute('aria-expanded', String(open));
+  toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
 }
 
 export function syncExperience(path = window.location.hash.slice(1).split('?')[0] || '/') {
   updateCounters();
-  document.querySelectorAll('[data-nav-path]').forEach((link) => link.classList.toggle('is-active', link.dataset.navPath === path));
+  document.querySelectorAll('[data-nav-path]').forEach((link) => {
+    const active = link.dataset.navPath === path;
+    link.classList.toggle('is-active', active);
+    link.toggleAttribute('aria-current', active);
+  });
   updateScrollUI();
 }
 
@@ -46,19 +66,21 @@ export function observeReveals() {
 
 export function initExperience() {
   document.body.insertAdjacentHTML('afterbegin', '<div class="scroll-progress" data-scroll-progress aria-hidden="true"></div><div class="toast-region" data-toast-region aria-live="polite" aria-atomic="false"></div><button class="back-to-top" data-back-to-top type="button" aria-label="Back to top">↑</button>');
-  window.addEventListener('scroll', updateScrollUI, { passive: true });
+  window.addEventListener('scroll', scheduleScrollUI, { passive: true });
+  window.addEventListener('resize', scheduleScrollUI, { passive: true });
   window.addEventListener('store:change', updateCounters);
   document.querySelector('[data-back-to-top]').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   document.querySelector('#site-header').addEventListener('click', (event) => {
     const toggle = event.target.closest('.nav__toggle');
     const link = event.target.closest('.nav__links a');
     if (!toggle && !link) return;
-    const header = document.querySelector('#site-header');
-    const open = toggle ? !header.classList.contains('is-menu-open') : false;
-    header.classList.toggle('is-menu-open', open);
-    document.body.classList.toggle('nav-open', open);
-    toggle?.setAttribute('aria-expanded', String(open));
-    if (toggle) toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    setMenuOpen(toggle ? !document.querySelector('#site-header').classList.contains('is-menu-open') : false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && document.querySelector('#site-header')?.classList.contains('is-menu-open')) {
+      setMenuOpen(false);
+      document.querySelector('.nav__toggle')?.focus();
+    }
   });
   updateScrollUI();
 }
