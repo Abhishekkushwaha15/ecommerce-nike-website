@@ -1,52 +1,117 @@
 # Swoosh Store
 
-A vanilla HTML, CSS, and JavaScript Nike-inspired ecommerce experience with hash-based routing and a responsive product catalog.
+Swoosh Store is a polished, Nike-inspired ecommerce storefront built with vanilla HTML, CSS, and JavaScript. It demonstrates a responsive product-shopping experience with client-side hash routing and browser-local cart and wishlist state. This is a learning and portfolio project and is not affiliated with, endorsed by, or connected to Nike.
 
-## Start
+## Features
 
-Serve the repository root with any static development server, then open `HTML/index.html`. The app uses hash routing, so no server-side route rewrites are required.
+- Hash-based routes for home, shop, product, search, wishlist, cart, about, contact, account, checkout, and a custom 404 state.
+- Search, product filtering, sorting, pagination, colour and size selection, related products, and review anchors.
+- Persistent shopping bag and wishlist using `localStorage`, with live header counts and toast feedback.
+- Responsive mobile navigation, accessible form validation, skip link, keyboard-friendly controls, and reduced-motion support.
+- Per-route page titles and social metadata, responsive layouts, loading feedback, back-to-top control, and lightweight reveal effects.
 
-## Routes
+## Tech Stack
 
-| Route | Purpose |
-| --- | --- |
-| `#/` | Home |
-| `#/shop` | Product catalog with search, filters, sorting, wishlist, bag actions, and load-more pagination |
-| `#/product?slug=air-zoom-pegasus-41` | Product detail with gallery, size/colour options, bag, wishlist, and reviews |
-| `#/search` | Search results |
-| `#/wishlist` | Saved products |
-| `#/cart` | Shopping cart |
-| `#/checkout` | Checkout flow |
-| `#/account` | Customer account |
-| `#/about` | Brand story, values, team, and service commitments |
-| `#/contact` | Contact details, validated message form, FAQ, and map placeholder |
+- HTML5
+- CSS3 (custom properties, responsive grids, media queries, and scoped imports)
+- Vanilla JavaScript ES modules
+- Browser `localStorage`, `CustomEvent`, `IntersectionObserver`, and hash routing
 
-## Experience features
-
-- Wishlist and bag choices persist in local storage, with live navigation counters and toast feedback.
-- Search supports instant results, suggestions, result highlighting, and recent searches stored locally.
-- Shared scroll progress, back-to-top control, route loading indicator, responsive empty states, and a custom 404 page provide consistent feedback throughout the storefront.
-
-## Structure
+## Project Structure
 
 ```text
-HTML/              application entry document
-CSS/               CSS entry point and base, layout, component, page layers
-JS/                router, reusable components, config, data, services, utilities
-pages/             lazy-loaded page modules (one module per route)
-components/        static component contracts/templates
-data/              JSON placeholder data
-assets/            images and icons
+HTML/           Application entry document
+CSS/            Base, layout, component, page, and refinement styles
+JS/             Router, shared components, services, utilities, and catalog data
+pages/          Lazy-loaded route modules
+assets/         Image, icon, and font assets
+data/           JSON reference data and placeholders
+components/     Static component documentation
 ```
 
-## Conventions
+## Installation
 
-- Add cross-page visual elements as modules in `JS/components/`.
-- The initial reusable component contracts include header, footer, product card/grid, cart item, filter panel, quantity selector, empty state, and loader.
-- Keep page rendering and page-specific behaviour in `pages/`.
-- Place API, storage, and domain operations in `JS/services/`.
-- Import CSS only through `CSS/style.css`; scope rules by responsibility.
-- The local catalog lives in `JS/data/products.js`; filters, sorting, and product lookup are handled client-side in `JS/services/catalog-service.js`.
-- Cart and wishlist choices are stored locally in the browser, including product size and colour variants.
+No build step or package installation is required.
 
-This project is for learning and demonstration purposes only and is not affiliated with Nike.
+1. Clone the repository.
+2. Serve the repository root with a static server. For example:
+
+   ```bash
+   python -m http.server 4173
+   ```
+
+3. Open `http://localhost:4173/HTML/index.html` in a modern browser.
+
+## Usage
+
+Use the primary navigation or hash routes to move through the storefront. For example:
+
+```text
+#/
+#/shop
+#/product?slug=air-zoom-pegasus-41
+#/search?q=running
+#/wishlist
+#/cart
+```
+
+Cart and wishlist choices are intentionally stored in the current browser only. Clear the site’s local storage to reset the demo state.
+
+## Screenshots
+
+Add repository-hosted images here when available:
+
+| View | Placeholder |
+| --- | --- |
+| Home | `docs/screenshots/home.png` |
+| Shop | `docs/screenshots/shop.png` |
+| Product | `docs/screenshots/product.png` |
+| Mobile | `docs/screenshots/mobile.png` |
+
+## Folder Structure
+
+```text
+ecommerce-nike-website/
+├── HTML/index.html
+├── CSS/
+│   ├── base/              # reset, tokens, global rules
+│   ├── components/        # reusable component styles
+│   ├── layouts/           # application layout rules
+│   ├── pages/             # route-specific styles
+│   └── style.css          # single CSS entry point
+├── JS/
+│   ├── components/        # shared UI modules
+│   ├── config/            # constants
+│   ├── data/              # in-browser product catalog
+│   ├── router/            # hash-route definitions and navigation
+│   ├── services/          # catalog, cart, wishlist, and events
+│   └── utils/             # formatting and safe HTML helpers
+├── pages/                 # route render and init modules
+├── assets/images/         # visual assets
+└── data/                  # JSON reference files
+```
+
+## Accessibility
+
+- Semantic landmarks, descriptive labels, visible focus treatment, and a skip-to-content link.
+- Keyboard-accessible navigation, product controls, filters, cart controls, and forms.
+- Live status updates for loading, cart feedback, form errors, and notifications.
+- `prefers-reduced-motion` support for all decorative motion.
+
+## Performance
+
+- Native ES-module lazy loading keeps page modules route-scoped.
+- A single preloaded hero image prevents the primary visual from loading late.
+- CSS uses one entry point and component/page separation to keep ownership clear.
+- Local catalog data avoids runtime API calls; animation work is limited with `requestAnimationFrame` and `IntersectionObserver`.
+
+## Future Improvements
+
+- Connect checkout, account, newsletter, and contact flows to real services.
+- Add automated browser, accessibility, and visual-regression tests.
+- Replace illustrative product art with licensed product photography and add real screenshots.
+- Add a deployment-specific canonical URL, social image, and analytics only where appropriate.
+
+## License
+
+Distributed under the [MIT License](LICENSE).

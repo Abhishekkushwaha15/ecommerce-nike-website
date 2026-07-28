@@ -10,7 +10,7 @@ const siteUrl = window.location.href.split('#')[0];
 const socialImageUrl = new URL('../assets/images/hero-performance-shoe.png', import.meta.url).href;
 
 function setMetadata(route) {
-  const title = `${route.title} | Nike`;
+  const title = `${route.title} | Swoosh Store`;
   const description = route.description;
   document.title = title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', description);
