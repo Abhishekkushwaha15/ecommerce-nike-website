@@ -1,4 +1,3 @@
-// Local catalog data keeps the storefront fast while the app remains backend-free.
 export const products = [
   { id: 'air-zoom-pegasus-41', slug: 'air-zoom-pegasus-41', name: 'Air Zoom Pegasus 41', model: 'Pegasus 41', category: 'running', brand: 'Nike', price: 12795, rating: 4.8, colors: ['black', 'white'], sizes: [6, 7, 8, 9, 10, 11], availability: 'in-stock', featured: true, newest: true, badge: 'New', art: 'obsidian', description: 'Responsive cushioning for everyday miles.' },
   { id: 'air-max-dn8', slug: 'air-max-dn8', name: 'Air Max Dn8', model: 'Dn8', category: 'lifestyle', brand: 'Nike', price: 16995, rating: 4.7, colors: ['orange', 'black'], sizes: [5, 6, 7, 8, 9], availability: 'in-stock', featured: true, newest: true, art: 'ember', description: 'Dynamic Air comfort with a bold profile.' },

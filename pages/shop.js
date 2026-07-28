@@ -60,7 +60,6 @@ export function init() {
   document.querySelector('[data-sort]').addEventListener('change', (event) => { state.sort = event.target.value; requestRender(); });
   shop.addEventListener('change', handleFilterChange);
   shop.addEventListener('click', handleAction);
-  // A brief skeleton is useful feedback when this route is first mounted.
   window.setTimeout(() => { document.querySelector('[data-shop-results]')?.setAttribute('aria-busy', 'false'); renderProducts(); }, 180);
 }
 

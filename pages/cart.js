@@ -93,10 +93,10 @@ export function init() {
     }
     if (action === 'save-for-later') {
       const status = page.querySelector('[data-checkout-status]');
-      if (status) status.textContent = 'Save for later is ready for your account in a future update.';
+      if (status) status.textContent = 'Save for later is not available in this demo.';
       return;
     }
-    if (action === 'checkout') { page.querySelector('[data-checkout-status]').textContent = 'Checkout is a demo in this storefront.'; return; }
+    if (action === 'checkout') { page.querySelector('[data-checkout-status]').textContent = 'Checkout is not available in this demo.'; return; }
     if (action === 'wishlist') {
       const card = button.closest('[data-product-id]');
       const saved = toggleWishlist(card.dataset.productId).includes(card.dataset.productId);
